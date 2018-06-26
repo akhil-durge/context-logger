@@ -4,25 +4,24 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"log-context/apicontext"
 	"runtime"
 )
 
 //Info logs with context
 func Info(ctx context.Context, msg string, v ...interface{}) {
-	ctxString := fmt.Sprintf("[%v:%v:%v] %v", apicontext.ReqID(ctx), apicontext.ClientID(ctx), apicontext.UserID(ctx), caller())
+	ctxString := fmt.Sprintf("[%v:%v:%v] %v", ReqID(ctx), ClientID(ctx), UserID(ctx), caller())
 	log.Printf("%v INFO: %v", ctxString, fmt.Sprintf(msg, v...))
 }
 
 //Error logs with context
 func Error(ctx context.Context, msg string, v ...interface{}) {
-	ctxString := fmt.Sprintf("[%v:%v:%v] %v", apicontext.ReqID(ctx), apicontext.ClientID(ctx), apicontext.UserID(ctx), caller())
+	ctxString := fmt.Sprintf("[%v:%v:%v] %v", ReqID(ctx), ClientID(ctx), UserID(ctx), caller())
 	log.Printf("%v ERROR: %v", ctxString, fmt.Sprintf(msg, v...))
 }
 
 //Debug logs with context
 func Debug(ctx context.Context, msg string, v ...interface{}) {
-	ctxString := fmt.Sprintf("[%v:%v:%v] %v", apicontext.ReqID(ctx), apicontext.ClientID(ctx), apicontext.UserID(ctx), caller())
+	ctxString := fmt.Sprintf("[%v:%v:%v] %v", ReqID(ctx), ClientID(ctx), UserID(ctx), caller())
 	log.Printf("%v DEBUG: %v", ctxString, fmt.Sprintf(msg, v...))
 }
 

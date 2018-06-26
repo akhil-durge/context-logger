@@ -1,4 +1,4 @@
-package apicontext
+package logger
 
 import (
 	"context"
@@ -15,7 +15,12 @@ const (
 )
 
 // WithReqID returns a new Context that carries request ID
-func WithReqID(ctx context.Context) context.Context {
+func WithReqID(ctx context.Context, reqID string) context.Context {
+	return context.WithValue(ctx, reqIDKey, reqID)
+}
+
+// WithNewReqID returns a new Context that carries newly generated request ID which is UUID v4
+func WithNewReqID(ctx context.Context) context.Context {
 	return context.WithValue(ctx, reqIDKey, uuid.NewV4().String())
 }
 
