@@ -45,18 +45,17 @@
   Mr. Akhil reports something went wrong. But because your program is a high performance parallelized wonder, you can’t be sure which line relates to his request. There is just no link between logs, neither is there any INFO/ERROR/DEBUG tag to know something went wrong.
 
 # Solution
-  Use a simple implementation presented in here. Just copy directories apicontext and logger in your project root, and you can write the same code above like-
+  Use a simple implementation presented in here. Just go get my package `log-context/logger`, and you can write the same code above like-
   
     package main
 
     import (
       "context"
-      "log-context/apicontext"
       "log-context/logger"
     )
 
     func main() {
-      ctx := apicontext.WithReqID(context.Background())
+      ctx := logger.WithNewReqID(context.Background())
       logger.Info(ctx, "test log with var %v, var %v", 1, "two")
       doSomethingError(ctx)
       doSomethingDebug(ctx)
@@ -82,6 +81,6 @@
   As you can see, just by one look, you are able to spot the link between different logs and are able to figure out if it's INFO/ERROR/DEBUG. Simple.
   
 # P.S.
-  1. clientID and userID are printed as 0:0 in above logs as I haven't set them. The methods to set them are provided in `apicontext/context.go` though. If you just want to log requestID, then just edit `ctxString` in `logger/logging.go` to remove them.
+  1. clientID and userID are printed as 0:0 in above logs as I haven't set them. The methods to set them are provided in `logger/context.go` and also how to use them is shown under `example/main.go`.
   2. With this implementation, you need to pass argument `ctx` to each method being called, so that you can print reqID:clientID:userID. I personally searched a lot over internet, but couldn't find any implementation to print context in log without actually passing it in each method. However, if YOU do find it, poke me :)
-  3. The logging format that suited me is `DATE TIME [requestID:clientID:userID] fileName:lineNo logLevel: msgToPrint`. But you can play around in file `logger/logging.go` to get your combination right, the code is pretty straightforward.
+  3. The logging format that suited me is `DATE TIME [requestID:clientID:userID] fileName:lineNo logLevel: msgToPrint`. But you are welcome to contribute in file `logger/logging.go` if you would like to have different pattern.
